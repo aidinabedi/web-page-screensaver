@@ -29,7 +29,6 @@
 		private void InitializeComponent()
 		{
 			this.webBrowser = new System.Windows.Forms.WebBrowser();
-			this.closeButton = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// webBrowser
@@ -45,25 +44,11 @@
 			this.webBrowser.TabStop = false;
 			this.webBrowser.WebBrowserShortcutsEnabled = false;
 			// 
-			// closeButton
-			// 
-			this.closeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.closeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.closeButton.Location = new System.Drawing.Point(242, 12);
-			this.closeButton.Name = "closeButton";
-			this.closeButton.Size = new System.Drawing.Size(30, 23);
-			this.closeButton.TabIndex = 1;
-			this.closeButton.Text = "X";
-			this.closeButton.UseVisualStyleBackColor = true;
-			this.closeButton.Visible = false;
-			this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
-			// 
 			// ScreensaverForm
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.ClientSize = new System.Drawing.Size(284, 262);
 			this.ControlBox = false;
-			this.Controls.Add(this.closeButton);
 			this.Controls.Add(this.webBrowser);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.MaximizeBox = false;
@@ -81,7 +66,6 @@
 		#endregion
 
 		private System.Windows.Forms.WebBrowser webBrowser;
-		private System.Windows.Forms.Button closeButton;
 	}
 }
 

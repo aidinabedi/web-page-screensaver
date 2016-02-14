@@ -117,9 +117,14 @@ namespace pl.polidea.lab.Web_Page_Screensaver
 			BrowseTo(url);
 		}
 
-		private void HandleUserActivity()
+		private void HandleUserActivity(bool isEscKeyDown)
 		{
-			if (StartTime.AddSeconds(1) > DateTime.Now) return;
+			if (StartTime.AddSeconds(1) > DateTime.Now) return; // TODO: is this necessary?
+
+			if (isEscKeyDown) // TODO: refactor this ugly solution!
+			{
+				Close();
+			}
 
 			RegistryKey reg = Registry.CurrentUser.CreateSubKey(Program.KEY);
 
@@ -129,27 +134,23 @@ namespace pl.polidea.lab.Web_Page_Screensaver
 			}
 			else
 			{
-				closeButton.Visible = true;
 				Cursor.Show();
 			}
 
 			reg.Close();
 		}
-
-		private void closeButton_Click(object sender, EventArgs e)
-		{
-			Close();
-		}
 	}
 
 	public class GlobalUserEventHandler : IMessageFilter
 	{
-		public delegate void UserEvent();
+		public delegate void UserEvent(bool isEscKeyDown);
 
 		private const int WM_MOUSEMOVE = 0x0200;
 		private const int WM_MBUTTONDBLCLK = 0x209;
 		private const int WM_KEYDOWN = 0x100;
 		private const int WM_KEYUP = 0x101;
+
+		public const int VK_ESCAPE = 0x1B;
 
 		public event UserEvent Event;
 
@@ -161,7 +162,8 @@ namespace pl.polidea.lab.Web_Page_Screensaver
 			{
 				if (Event != null)
 				{
-					Event();
+					bool isEscKeyDown = (m.Msg == WM_KEYDOWN && m.WParam.ToInt64() == VK_ESCAPE);
+					Event(isEscKeyDown);
 				}
 			}
 			// Always allow message to continue to the next filter control
