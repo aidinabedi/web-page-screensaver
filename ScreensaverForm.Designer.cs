@@ -33,7 +33,6 @@
 			// 
 			// webBrowser
 			// 
-			this.webBrowser.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
 			this.webBrowser.AllowWebBrowserDrop = false;
 			this.webBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.webBrowser.Location = new System.Drawing.Point(0, 0);
