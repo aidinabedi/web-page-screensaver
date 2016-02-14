@@ -117,33 +117,38 @@ namespace pl.polidea.lab.Web_Page_Screensaver
 			BrowseTo(url);
 		}
 
-		private void HandleUserActivity(bool isEscKeyDown)
+		private bool HandleUserActivity(bool isEscKeyDown)
 		{
-			if (StartTime.AddSeconds(1) > DateTime.Now) return; // TODO: is this necessary?
+			if (StartTime.AddSeconds(1) > DateTime.Now) return true; // TODO: is this necessary?
 
 			if (isEscKeyDown) // TODO: refactor this ugly solution!
 			{
 				Close();
+				return true;
 			}
 
-			RegistryKey reg = Registry.CurrentUser.CreateSubKey(Program.KEY);
-
-			if (Boolean.Parse((string)reg.GetValue(PreferencesForm.CLOSE_ON_ACTIVITY_PREF, PreferencesForm.CLOSE_ON_ACTIVITY_PREF_DEFAULT)))
+			using (var reg = Registry.CurrentUser.CreateSubKey(Program.KEY))
 			{
-				Close();
-			}
-			else
-			{
-				Cursor.Show();
+				if (Boolean.Parse((string)reg.GetValue(PreferencesForm.CLOSE_ON_ACTIVITY_PREF, PreferencesForm.CLOSE_ON_ACTIVITY_PREF_DEFAULT)))
+				{
+					Close();
+					return true;
+				}
+				else
+				{
+					webBrowser.ScrollBarsEnabled = true;
+					webBrowser.WebBrowserShortcutsEnabled = true;
+					Cursor.Show();
+				}
 			}
 
-			reg.Close();
+			return false;
 		}
 	}
 
 	public class GlobalUserEventHandler : IMessageFilter
 	{
-		public delegate void UserEvent(bool isEscKeyDown);
+		public delegate bool UserEvent(bool isEscKeyDown);
 
 		private const int WM_MOUSEMOVE = 0x0200;
 		private const int WM_MBUTTONDBLCLK = 0x209;
@@ -163,10 +168,11 @@ namespace pl.polidea.lab.Web_Page_Screensaver
 				if (Event != null)
 				{
 					bool isEscKeyDown = (m.Msg == WM_KEYDOWN && m.WParam.ToInt64() == VK_ESCAPE);
-					Event(isEscKeyDown);
+					return Event(isEscKeyDown);
 				}
 			}
-			// Always allow message to continue to the next filter control
+
+			// Allow message to continue to the next filter control
 			return false;
 		}
 	}
