@@ -40,7 +40,6 @@
 			this.webBrowser.Location = new System.Drawing.Point(0, 0);
 			this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
 			this.webBrowser.Name = "webBrowser";
-			this.webBrowser.ScrollBarsEnabled = false;
 			this.webBrowser.Size = new System.Drawing.Size(284, 262);
 			this.webBrowser.TabIndex = 0;
 			this.webBrowser.TabStop = false;
@@ -61,16 +60,17 @@
 			// 
 			// ScreensaverForm
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.ClientSize = new System.Drawing.Size(284, 262);
+			this.ControlBox = false;
 			this.Controls.Add(this.closeButton);
 			this.Controls.Add(this.webBrowser);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "ScreensaverForm";
-			this.Text = "Form1";
+			this.ShowIcon = false;
+			this.ShowInTaskbar = false;
 			this.TopMost = true;
 			this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
 			this.Load += new System.EventHandler(this.ScreensaverForm_Load);
